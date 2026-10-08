@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NO POVERTY — Smart Government Schemes Finder & Welfare Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <div id="app-navbar"></div>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container-custom">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="hero-badge">
+            <i class="fa-solid fa-flag"></i> UN SDG 1: NO POVERTY INITIATIVE
+          </div>
+          <h1 class="hero-title" data-i18n="hero_title">
+            Find the Government Support You May Be <span>Eligible For</span>
+          </h1>
+          <p class="hero-subtitle" data-i18n="hero_subtitle">
+            Discover welfare schemes, check eligibility, understand required documents, and get guided to official application portals.
+          </p>
+          <div class="d-flex flex-wrap gap-3">
+            <a href="scheme-finder.html" class="btn-gov-primary" data-i18n="btn_find_schemes">
+              <i class="fa-solid fa-magnifying-glass me-1"></i> Find My Schemes
+            </a>
+            <a href="eligibility.html" class="btn-gov-secondary" data-i18n="btn_check_eligibility">
+              <i class="fa-solid fa-clipboard-check me-1"></i> Check Eligibility
+            </a>
+            <a href="voice-search.html" class="btn-gov-secondary">
+              <i class="fa-solid fa-microphone me-1"></i> Voice Search
+            </a>
+          </div>
+        </div>
+        <div class="col-lg-4 text-center d-none d-lg-block">
+          <div class="p-4 bg-white bg-opacity-10 rounded-4 border border-white border-opacity-25 backdrop-blur">
+            <div class="fs-1 text-warning mb-2"><i class="fa-solid fa-hands-holding-child"></i></div>
+            <h4 class="fw-bold text-white mb-2">Zero Poverty Vision</h4>
+            <p class="text-white-50 small mb-3">Empowering every Indian citizen with direct access to sovereign entitlements, scholarships, and social security.</p>
+            <div class="d-flex justify-content-center gap-2">
+              <span class="badge bg-danger">Direct DBT</span>
+              <span class="badge bg-success">Verified Links</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Bar -->
+  <div class="container-custom">
+    <div class="stats-bar">
+      <div class="stat-card">
+        <div class="stat-number">10+</div>
+        <div class="stat-label" data-i18n="stat_schemes">Government Schemes</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">10</div>
+        <div class="stat-label" data-i18n="stat_categories">Beneficiary Categories</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">25,000+</div>
+        <div class="stat-label" data-i18n="stat_citizens">Beneficiaries Helped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label" data-i18n="stat_tracked">Verified Official Portals</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SDG 1 Feature Banner -->
+  <div class="container-custom">
+    <div class="sdg-banner p-4 p-md-5 my-5">
+      <div class="sdg-banner-inner">
+        <div>
+          <span class="badge bg-dark text-white mb-2 px-3 py-1">SUSTAINABLE DEVELOPMENT GOAL 1</span>
+          <h2 class="fw-bold mb-2">Target 1.3: Social Protection Systems for All</h2>
+          <p class="mb-0" style="max-width: 650px;">
+            End poverty in all its forms everywhere. Our platform democratizes access by matching marginalized households with state and central welfare nets, removing bureaucratic friction.
+          </p>
+        </div>
+        <div>
+          <a href="about.html" class="btn btn-light fw-bold px-4 py-2 text-danger">
+            Learn About SDG 1 <i class="fa-solid fa-arrow-right ms-1"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Beneficiary Categories Grid -->
+  <section class="section-wrapper bg-white">
+    <div class="container-custom">
+      <div class="section-header">
+        <span class="section-tag">Target Beneficiaries</span>
+        <h2 class="section-title">Who Are You Looking For Support For?</h2>
+        <p class="section-subtitle">Tailored welfare assistance mapped directly to demographic and socio-economic groups.</p>
+      </div>
+
+      <div class="category-grid" id="landing-categories">
+        <a href="scheme-finder.html?cat=student" class="category-card">
+          <div class="category-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <div class="category-name" data-i18n="cat_student">Students & Youth</div>
+          <div class="category-desc">Scholarships, tuition fee waivers, education loans</div>
+        </a>
+        <a href="scheme-finder.html?cat=farmer" class="category-card">
+          <div class="category-icon"><i class="fa-solid fa-seedling"></i></div>
+          <div class="category-name" data-i18n="cat_farmer">Farmers & Agriculture</div>
+          <div class="category-desc">PM-KISAN, crop insurance, fertilizer subsidies</div>
+        </a>
+        <a href="scheme-finder.html?cat=senior_citizen" class="category-card">
+          <div class="category-icon"><i class="fa-solid fa-person-cane"></i></div>
+          <div class="category-name" data-i18n="cat_senior">Senior Citizens</div>
+          <div class="category-desc">Old age pension (IGNOAPS), medical assistance</div>
+        </a>
+        <a href="scheme-finder.html?cat=employment" class="category-card">
+          <div class="category-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <div class="category-name" data-i18n="cat_employment">Job Seekers & Livelihood</div>
+          <div class="category-desc">Skill training, PM SVANidhi micro-credit, MGNREGA</div>
+        </a>
+        <a href="scheme-finder.html?cat=housing" class="category-card">
+          <div class="category-icon"><i class="fa-solid fa-house-chimney"></i></div>
+          <div class="category-name" data-i18n="cat_housing">Housing & Shelter</div>
+          <div class="category-desc">PMAY-G rural housing grant, urban pucca houses</div>
+        </a>
+        <a href="scheme-finder.html?cat=healthcare" class="category-card">
+          <div class="category-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+          <div class="category-name" data-i18n="cat_healthcare">Healthcare & Medical</div>
+          <div class="category-desc">Ayushman Bharat ₹5 Lakh cashless health cover</div>
+        </a>
+        <a href="scheme-finder.html?cat=women_children" class="category-card">
+          <div class="category-icon"><i class="fa-solid fa-person-breastfeeding"></i></div>
+          <div class="category-name" data-i18n="cat_women">Women & Children</div>
+          <div class="category-desc">PMMVY maternity cash support, Sukanya Samriddhi</div>
+        </a>
+        <a href="scheme-finder.html?cat=disability" class="category-card">
+          <div class="category-icon"><i class="fa-solid fa-wheelchair"></i></div>
+          <div class="category-name" data-i18n="cat_disability">Persons with Disabilities</div>
+          <div class="category-desc">ADIP free assistive aids, Divyangjan pensions</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="section-wrapper">
+    <div class="container-custom">
+      <div class="section-header">
+        <span class="section-tag">7-Step Path to Entitlement</span>
+        <h2 class="section-title">How The Platform Works</h2>
+        <p class="section-subtitle">We guide you through the process, from discovery to verified official government submission.</p>
+      </div>
+
+      <div class="row g-4 text-center">
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 border h-100 shadow-sm">
+            <div class="rounded-circle bg-primary-subtle text-primary mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-weight: 800;">1</div>
+            <h5 class="fw-bold">Find Schemes</h5>
+            <p class="text-muted small">Search by keyword, state, category, or voice input across our verified scheme database.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 border h-100 shadow-sm">
+            <div class="rounded-circle bg-success-subtle text-success mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-weight: 800;">2</div>
+            <h5 class="fw-bold">Check Eligibility</h5>
+            <p class="text-muted small">Use the 7-step wizard to see green, yellow, or red indicators matching your income, age, and criteria.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 border h-100 shadow-sm">
+            <div class="rounded-circle bg-warning-subtle text-warning mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-weight: 800;">3</div>
+            <h5 class="fw-bold">Get Recommendations</h5>
+            <p class="text-muted small">Receive tailored schemes with percentage scores and transparent explanations of matching criteria.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 border h-100 shadow-sm">
+            <div class="rounded-circle bg-info-subtle text-info mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-weight: 800;">4</div>
+            <h5 class="fw-bold">Prepare Documents</h5>
+            <p class="text-muted small">Access personalized checklists for Aadhaar, income, bank passbooks, and land records.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 border h-100 shadow-sm">
+            <div class="rounded-circle bg-danger-subtle text-danger mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-weight: 800;">5</div>
+            <h5 class="fw-bold">Apply on Official Portal</h5>
+            <p class="text-muted small">Follow verified guidance links directly to authoritative government domains (.gov.in / .nic.in).</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="p-4 bg-white rounded-4 border h-100 shadow-sm">
+            <div class="rounded-circle bg-secondary-subtle text-secondary mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px; font-weight: 800;">6</div>
+            <h5 class="fw-bold">Track Application</h5>
+            <p class="text-muted small">Store acknowledgment numbers and update internal milestone progress through our visual timeline.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Popular Welfare Schemes Preview -->
+  <section class="section-wrapper bg-white">
+    <div class="container-custom">
+      <div class="d-flex justify-content-between align-items-end mb-4 flex-wrap gap-2">
+        <div>
+          <span class="section-tag">Featured Initiatives</span>
+          <h2 class="section-title">Popular Welfare Schemes</h2>
+        </div>
+        <a href="scheme-finder.html" class="btn btn-outline-primary btn-sm">
+          View All Schemes <i class="fa-solid fa-arrow-right ms-1"></i>
+        </a>
+      </div>
+
+      <div class="row g-4" id="landing-featured-schemes">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </section>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/scheme.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const res = await API.get('/schemes/popular');
+      const popular = res && res.data ? res.data : [];
+      SchemeManager.renderSchemeCards(popular.slice(0, 3), 'landing-featured-schemes');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: no-poverty-platform
+    env: docker
+    dockerfilePath: Dockerfile
+    plan: free
+    region: oregon
+    envVars:
+      - key: PORT
+        value: 8085
+      - key: SPRING_PROFILES_ACTIVE
+        value: default
+      - key: JWT_SECRET
+        generateValue: true
+

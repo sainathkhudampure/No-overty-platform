@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Schemes — Admin Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div id="app-navbar"></div>
+
+  <div class="container my-4 flex-grow-1">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+      <div>
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb mb-1 small">
+            <li class="breadcrumb-item"><a href="admin-dashboard.html">Admin</a></li>
+            <li class="breadcrumb-item active">Scheme Management</li>
+          </ol>
+        </nav>
+        <h3 class="fw-bold text-dark mb-0">Government Welfare Scheme Master Registry</h3>
+      </div>
+      <button class="btn btn-gov-primary" data-bs-toggle="modal" data-bs-target="#schemeModal" onclick="prepareAddScheme()">
+        <i class="fa-solid fa-plus me-1"></i> Add New Welfare Scheme
+      </button>
+    </div>
+
+    <!-- Scheme Table -->
+    <div class="card border-0 shadow-sm p-4 bg-white">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Scheme Code</th>
+              <th>Scheme Title & Ministry</th>
+              <th>Geographic State</th>
+              <th>Status</th>
+              <th>Views</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-schemes-tbody">
+            <!-- Rendered by AdminPortal.loadSchemesTable -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Scheme Modal -->
+  <div class="modal fade" id="schemeModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="schemeModalTitle">Add New Welfare Scheme</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="scheme-form" onsubmit="handleSaveScheme(event)">
+          <div class="modal-body">
+            <input type="hidden" id="modal-scheme-id">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label-gov">Scheme Unique Code *</label>
+                <input type="text" id="m-scheme-code" class="form-control form-control-gov font-monospace" placeholder="e.g. PM-SCHOLAR-2026" required>
+              </div>
+              <div class="col-md-8">
+                <label class="form-label-gov">Scheme Full Name *</label>
+                <input type="text" id="m-scheme-name" class="form-control form-control-gov" placeholder="e.g. Pradhan Mantri Post-Matric Assistance" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-gov">Government Ministry / Department *</label>
+                <input type="text" id="m-scheme-dept" class="form-control form-control-gov" placeholder="Ministry of Social Justice" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-gov">State Availability</label>
+                <input type="text" id="m-scheme-state" class="form-control form-control-gov" value="All India">
+              </div>
+              <div class="col-12">
+                <label class="form-label-gov">Short Description *</label>
+                <textarea id="m-scheme-short" class="form-control form-control-gov" rows="2" placeholder="Brief 1-2 sentence overview" required></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label-gov">Full Description & Guidelines</label>
+                <textarea id="m-scheme-full" class="form-control form-control-gov" rows="3" placeholder="Detailed background and coverage..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-gov">Objective</label>
+                <textarea id="m-scheme-obj" class="form-control form-control-gov" rows="2" placeholder="Main purpose..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-gov">Financial Benefits & Entitlements *</label>
+                <textarea id="m-scheme-benefits" class="form-control form-control-gov" rows="2" placeholder="e.g. ₹6,000 direct benefit transfer" required></textarea>
+              </div>
+              <div class="col-12">
+                <label class="form-label-gov">Step-by-Step Application Process</label>
+                <textarea id="m-scheme-process" class="form-control form-control-gov" rows="2" placeholder="Step 1: Check eligibility. Step 2: Visit portal..."></textarea>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-gov">Official Information Portal URL *</label>
+                <input type="url" id="m-scheme-portal" class="form-control form-control-gov" placeholder="https://pmkisan.gov.in" required>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label-gov">Official Online Application URL *</label>
+                <input type="url" id="m-scheme-apply" class="form-control form-control-gov" placeholder="https://pmkisan.gov.in/Registration.aspx" required>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-gov-primary">Save Scheme Record</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AdminPortal.loadSchemesTable();
+    });
+
+    function prepareAddScheme() {
+      document.getElementById('scheme-form').reset();
+      document.getElementById('modal-scheme-id').value = '';
+      document.getElementById('schemeModalTitle').innerText = 'Add New Welfare Scheme';
+    }
+
+    async function handleSaveScheme(e) {
+      e.preventDefault();
+      const payload = {
+        code: document.getElementById('m-scheme-code').value.trim(),
+        name: document.getElementById('m-scheme-name').value.trim(),
+        department: document.getElementById('m-scheme-dept').value.trim(),
+        stateAvailability: document.getElementById('m-scheme-state').value.trim(),
+        shortDescription: document.getElementById('m-scheme-short').value.trim(),
+        fullDescription: document.getElementById('m-scheme-full').value.trim() || document.getElementById('m-scheme-short').value.trim(),
+        objective: document.getElementById('m-scheme-obj').value.trim() || 'Socio-economic welfare support.',
+        benefits: document.getElementById('m-scheme-benefits').value.trim(),
+        applicationProcess: document.getElementById('m-scheme-process').value.trim() || 'Apply on official website.',
+        officialPortalUrl: document.getElementById('m-scheme-portal').value.trim(),
+        officialApplicationUrl: document.getElementById('m-scheme-apply').value.trim(),
+        isActive: true
+      };
+
+      const res = await API.post('/admin/schemes', payload);
+      if (res && res.success) {
+        App.showToast('Scheme saved successfully!', 'success');
+        bootstrap.Modal.getInstance(document.getElementById('schemeModal')).hide();
+        AdminPortal.loadSchemesTable();
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Schemes — NO POVERTY Welfare Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div id="app-navbar"></div>
+
+  <div class="container my-4 flex-grow-1">
+    <div class="text-center mb-4">
+      <span class="badge bg-danger mb-1 px-3 py-1">SDG 1 WELFARE EVALUATOR</span>
+      <h2 class="fw-bold text-dark">Side-by-Side Scheme Comparison</h2>
+      <p class="text-muted small">Compare entitlements, eligibility criteria, and required paperwork between welfare programs.</p>
+    </div>
+
+    <!-- Scheme Selectors -->
+    <div class="card border-0 shadow-sm p-4 mb-4 bg-white">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-5">
+          <label class="form-label-gov">Scheme 1</label>
+          <select id="select-scheme-1" class="form-select form-control-gov" onchange="loadComparison()"></select>
+        </div>
+        <div class="col-md-2 text-center text-muted fw-bold">
+          <span class="badge bg-light text-dark border p-2">VS</span>
+        </div>
+        <div class="col-md-5">
+          <label class="form-label-gov">Scheme 2</label>
+          <select id="select-scheme-2" class="form-select form-control-gov" onchange="loadComparison()"></select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="card border-0 shadow-sm p-4 bg-white overflow-hidden">
+      <div class="table-responsive">
+        <table class="table table-bordered align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 25%;">Feature / Metric</th>
+              <th style="width: 37.5%;" id="th-scheme-1" class="text-primary fs-6">Scheme 1</th>
+              <th style="width: 37.5%;" id="th-scheme-2" class="text-primary fs-6">Scheme 2</th>
+            </tr>
+          </thead>
+          <tbody id="comparison-tbody">
+            <!-- Injected by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    let schemesList = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const res = await API.get('/schemes');
+      schemesList = res && res.data ? res.data : [];
+
+      const s1 = document.getElementById('select-scheme-1');
+      const s2 = document.getElementById('select-scheme-2');
+
+      schemesList.forEach((s, idx) => {
+        s1.innerHTML += `<option value="${s.id}" ${idx === 0 ? 'selected' : ''}>${s.name}</option>`;
+        s2.innerHTML += `<option value="${s.id}" ${idx === 1 ? 'selected' : ''}>${s.name}</option>`;
+      });
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const id1 = urlParams.get('id1');
+      const id2 = urlParams.get('id2');
+      if (id1) s1.value = id1;
+      if (id2) s2.value = id2;
+
+      loadComparison();
+    });
+
+    async function loadComparison() {
+      const id1 = document.getElementById('select-scheme-1').value;
+      const id2 = document.getElementById('select-scheme-2').value;
+
+      const sch1 = schemesList.find(s => s.id == id1) || schemesList[0];
+      const sch2 = schemesList.find(s => s.id == id2) || schemesList[1];
+
+      document.getElementById('th-scheme-1').innerText = sch1.name;
+      document.getElementById('th-scheme-2').innerText = sch2.name;
+
+      const tbody = document.getElementById('comparison-tbody');
+      tbody.innerHTML = `
+        <tr>
+          <td class="fw-bold bg-light">Ministry / Department</td>
+          <td>${sch1.department}</td>
+          <td>${sch2.department}</td>
+        </tr>
+        <tr>
+          <td class="fw-bold bg-light">Target Beneficiary</td>
+          <td>${sch1.categories?.map(c => c.name).join(', ') || 'General'}</td>
+          <td>${sch2.categories?.map(c => c.name).join(', ') || 'General'}</td>
+        </tr>
+        <tr>
+          <td class="fw-bold bg-light">Financial Entitlement</td>
+          <td class="text-success fw-bold">${sch1.benefits}</td>
+          <td class="text-success fw-bold">${sch2.benefits}</td>
+        </tr>
+        <tr>
+          <td class="fw-bold bg-light">Income Eligibility Limit</td>
+          <td>${sch1.eligibilityCriteria?.maxIncome ? 'Up to ₹' + sch1.eligibilityCriteria.maxIncome.toLocaleString('en-IN') : 'No ceiling'}</td>
+          <td>${sch2.eligibilityCriteria?.maxIncome ? 'Up to ₹' + sch2.eligibilityCriteria.maxIncome.toLocaleString('en-IN') : 'No ceiling'}</td>
+        </tr>
+        <tr>
+          <td class="fw-bold bg-light">Eligible Age Range</td>
+          <td>${sch1.eligibilityCriteria?.minAge || 0} - ${sch1.eligibilityCriteria?.maxAge || 100} Years</td>
+          <td>${sch2.eligibilityCriteria?.minAge || 0} - ${sch2.eligibilityCriteria?.maxAge || 100} Years</td>
+        </tr>
+        <tr>
+          <td class="fw-bold bg-light">State Availability</td>
+          <td>${sch1.stateAvailability || 'All India'}</td>
+          <td>${sch2.stateAvailability || 'All India'}</td>
+        </tr>
+        <tr>
+          <td class="fw-bold bg-light">Required Documents</td>
+          <td>${sch1.documents?.map(d => `<span class="badge bg-light text-dark border me-1 mb-1">${d.documentName}</span>`).join('') || 'Aadhaar Card'}</td>
+          <td>${sch2.documents?.map(d => `<span class="badge bg-light text-dark border me-1 mb-1">${d.documentName}</span>`).join('') || 'Aadhaar Card'}</td>
+        </tr>
+        <tr>
+          <td class="fw-bold bg-light">Official Application Portal</td>
+          <td><a href="${sch1.officialPortalUrl}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Visit Portal</a></td>
+          <td><a href="${sch2.officialPortalUrl}" target="_blank" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Visit Portal</a></td>
+        </tr>
+      `;
+    }
+  </script>
+</body>
+</html>

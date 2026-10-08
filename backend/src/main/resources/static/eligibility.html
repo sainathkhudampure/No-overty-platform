@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check Eligibility Wizard — NO POVERTY Welfare Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div id="app-navbar"></div>
+
+  <div class="container my-4 flex-grow-1" style="max-width: 860px;">
+    <div class="text-center mb-4">
+      <span class="badge bg-danger mb-2 px-3 py-1">UN SDG 1: NO POVERTY</span>
+      <h2 class="fw-bold text-dark">Welfare Eligibility Assessment Wizard</h2>
+      <p class="text-muted small max-w-600 mx-auto">Complete this simple 6-step questionnaire to evaluate your potential entitlement match against official government guidelines.</p>
+    </div>
+
+    <!-- Wizard Stepper Indicators -->
+    <div class="wizard-steps">
+      <div class="wizard-step-item active" id="step-indicator-1">
+        <div class="wizard-step-circle">1</div>
+        <div class="wizard-step-label">Personal</div>
+      </div>
+      <div class="wizard-step-item" id="step-indicator-2">
+        <div class="wizard-step-circle">2</div>
+        <div class="wizard-step-label">Income</div>
+      </div>
+      <div class="wizard-step-item" id="step-indicator-3">
+        <div class="wizard-step-circle">3</div>
+        <div class="wizard-step-label">Work</div>
+      </div>
+      <div class="wizard-step-item" id="step-indicator-4">
+        <div class="wizard-step-circle">4</div>
+        <div class="wizard-step-label">Education</div>
+      </div>
+      <div class="wizard-step-item" id="step-indicator-5">
+        <div class="wizard-step-circle">5</div>
+        <div class="wizard-step-label">Location</div>
+      </div>
+      <div class="wizard-step-item" id="step-indicator-6">
+        <div class="wizard-step-circle">6</div>
+        <div class="wizard-step-label">Category</div>
+      </div>
+      <div class="wizard-step-item" id="step-indicator-7">
+        <div class="wizard-step-circle">7</div>
+        <div class="wizard-step-label">Result</div>
+      </div>
+    </div>
+
+    <!-- Wizard Panels Card -->
+    <div class="card border-0 shadow-sm p-4 p-md-5 bg-white">
+      <!-- Step 1: Personal -->
+      <div id="step-panel-1">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-user text-primary me-2"></i> Step 1: Personal Demographic Details</h4>
+        <p class="text-muted small mb-4">Welfare schemes frequently define specific age thresholds (e.g. child education vs senior pension).</p>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label-gov">Current Age (in Years) *</label>
+            <input type="number" id="wizard-age" class="form-control form-control-gov" placeholder="e.g. 21" min="0" max="110" value="24" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label-gov">Gender *</label>
+            <select id="wizard-gender" class="form-select form-control-gov">
+              <option value="ALL">Any / Prefer not to say</option>
+              <option value="MALE">Male</option>
+              <option value="FEMALE">Female</option>
+              <option value="OTHER">Other / Transgender</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2: Income -->
+      <div id="step-panel-2" class="d-none">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-coins text-warning me-2"></i> Step 2: Household Economic Profile</h4>
+        <p class="text-muted small mb-4">Central and State welfare benefits are prioritized according to annual family income ceilings.</p>
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label class="form-label-gov">Total Annual Family Income (₹) *</label>
+            <input type="number" id="wizard-income" class="form-control form-control-gov" placeholder="e.g. 120000" value="120000" required>
+            <div class="form-text small">Enter cumulative household earnings from all sources.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3: Occupation -->
+      <div id="step-panel-3" class="d-none">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-briefcase text-info me-2"></i> Step 3: Primary Occupation / Livelihood</h4>
+        <p class="text-muted small mb-4">Identify your primary trade to check sector-specific credit, insurance, and subsidies.</p>
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label class="form-label-gov">Occupational Category *</label>
+            <select id="wizard-occupation" class="form-select form-control-gov">
+              <option value="FARMER">Farmer / Agricultural Laborer</option>
+              <option value="STUDENT">Full-Time Student</option>
+              <option value="STREET_VENDOR">Street Vendor / Micro Hawker</option>
+              <option value="UNEMPLOYED">Unemployed / Job Seeker</option>
+              <option value="SELF_EMPLOYED">Self Employed / Artisan</option>
+              <option value="RETIRED">Retired / Senior Citizen</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Education -->
+      <div id="step-panel-4" class="d-none">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-graduation-cap text-success me-2"></i> Step 4: Educational Status</h4>
+        <p class="text-muted small mb-4">Scholarships and skill training programs require current educational attainment details.</p>
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label class="form-label-gov">Current Educational Attainment</label>
+            <select id="wizard-education" class="form-select form-control-gov">
+              <option value="UNDERGRADUATE">Undergraduate / College Degree</option>
+              <option value="POSTGRADUATE">Postgraduate / Masters</option>
+              <option value="HIGHER_SECONDARY">Class 11 or 12</option>
+              <option value="SECONDARY">Class 10 (Matriculation)</option>
+              <option value="PRIMARY">Primary / Middle School</option>
+              <option value="DIPLOMA">Diploma / Technical ITI</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 5: Location -->
+      <div id="step-panel-5" class="d-none">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-map-location-dot text-danger me-2"></i> Step 5: State & District of Residence</h4>
+        <p class="text-muted small mb-4">Certain welfare subsidies are state-sponsored or restricted to designated geographic zones.</p>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label-gov">State *</label>
+            <select id="wizard-state" class="form-select form-control-gov">
+              <option value="Karnataka" selected>Karnataka</option>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Uttar Pradesh">Uttar Pradesh</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
+              <option value="Bihar">Bihar</option>
+              <option value="Delhi">Delhi</option>
+              <option value="All India">Other States</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label-gov">District</label>
+            <input type="text" id="wizard-district" class="form-control form-control-gov" placeholder="e.g. Bengaluru Urban">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 6: Category Specific -->
+      <div id="step-panel-6" class="d-none">
+        <h4 class="fw-bold text-dark mb-3"><i class="fa-solid fa-sliders text-secondary me-2"></i> Step 6: Special Demographic Entitlements</h4>
+        <p class="text-muted small mb-4">Select all applicable criteria for specialized welfare interventions.</p>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-check form-switch p-3 border rounded-3 bg-light">
+              <input class="form-check-input ms-0 me-3" type="checkbox" id="wizard-student">
+              <label class="form-check-label fw-semibold" for="wizard-student">
+                Active Student Enrollment
+                <div class="text-muted small fw-normal">Attending recognized school, college, or university</div>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check form-switch p-3 border rounded-3 bg-light">
+              <input class="form-check-input ms-0 me-3" type="checkbox" id="wizard-farmer">
+              <label class="form-check-label fw-semibold" for="wizard-farmer">
+                Agricultural Landholding Farmer
+                <div class="text-muted small fw-normal">Owns or co-owns cultivable agricultural land</div>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check form-switch p-3 border rounded-3 bg-light">
+              <input class="form-check-input ms-0 me-3" type="checkbox" id="wizard-disability">
+              <label class="form-check-label fw-semibold" for="wizard-disability">
+                Divyangjan (Person with Disability)
+                <div class="text-muted small fw-normal">Holds 40%+ disability certificate or UDID card</div>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-check form-switch p-3 border rounded-3 bg-light">
+              <input class="form-check-input ms-0 me-3" type="checkbox" id="wizard-senior">
+              <label class="form-check-label fw-semibold" for="wizard-senior">
+                Senior Citizen (60+ Years)
+                <div class="text-muted small fw-normal">Qualifies for elder social assistance & pension</div>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 7: Results -->
+      <div id="step-panel-7" class="d-none">
+        <div id="wizard-result-box">
+          <!-- Injected by EligibilityWizard.displayResult -->
+        </div>
+      </div>
+
+      <!-- Wizard Buttons -->
+      <div class="d-flex justify-content-between align-items-center mt-4 pt-3 border-top" id="wizard-nav-buttons">
+        <button type="button" class="btn btn-outline-secondary px-4" id="wizard-prev-btn" onclick="EligibilityWizard.prevStep()">
+          <i class="fa-solid fa-arrow-left me-1"></i> Previous
+        </button>
+        <button type="button" class="btn btn-gov-primary px-4" id="wizard-next-btn" onclick="EligibilityWizard.nextStep()">
+          Next <i class="fa-solid fa-arrow-right ms-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/eligibility.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      EligibilityWizard.init();
+    });
+  </script>
+</body>
+</html>

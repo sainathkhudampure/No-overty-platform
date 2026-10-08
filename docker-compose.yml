@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # MySQL 8.0 Database Service
+  mysql-db:
+    image: mysql:8.0
+    container_name: no-poverty-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: no_poverty_db
+      MYSQL_USER: nopoverty
+      MYSQL_PASSWORD: securepassword123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./database/sample_data.sql:/docker-entrypoint-initdb.d/02_sample_data.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "nopoverty", "-psecurepassword123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Spring Boot Welfare Platform Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: no-poverty-web
+    restart: unless-stopped
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_PROFILES_ACTIVE: mysql
+      SERVER_PORT: 8085
+      DB_USERNAME: nopoverty
+      DB_PASSWORD: securepassword123
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/no_poverty_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&characterEncoding=UTF-8
+      JWT_SECRET: 9a4f2c8d7e1b5a3f8c2e6d9b1a4f7e2c5d8a1b4e7c0f3a6d9b2e5a8c1f4d7b0e
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8085/api/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  mysql_data:
+    driver: local
+

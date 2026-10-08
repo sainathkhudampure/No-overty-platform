@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citizen Dashboard — NO POVERTY Welfare Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div id="app-navbar"></div>
+
+  <div class="container my-4 flex-grow-1">
+    <!-- Welcome Header -->
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+      <div>
+        <h2 class="fw-bold text-dark mb-1" id="dash-welcome">Welcome back, Citizen</h2>
+        <p class="text-muted small mb-0">Track your welfare discovery, document readiness, and application progress.</p>
+      </div>
+      <div class="d-flex gap-2">
+        <a href="scheme-finder.html" class="btn btn-gov-primary py-2 px-3">
+          <i class="fa-solid fa-magnifying-glass me-1"></i> Explore Schemes
+        </a>
+        <a href="ai-assistant.html" class="btn btn-outline-primary py-2 px-3">
+          <i class="fa-solid fa-robot me-1"></i> AI Assistant
+        </a>
+      </div>
+    </div>
+
+    <!-- Summary Metrics Cards -->
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm p-3 h-100">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="text-muted small fw-semibold">Profile Readiness</div>
+              <div class="fs-3 fw-bold text-primary" id="dash-profile-pct">85%</div>
+            </div>
+            <div class="rounded-circle bg-primary-subtle text-primary p-3">
+              <i class="fa-solid fa-user-check fs-4"></i>
+            </div>
+          </div>
+          <div class="progress mt-2" style="height: 5px;">
+            <div id="dash-profile-bar" class="progress-bar bg-primary" style="width: 85%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm p-3 h-100">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="text-muted small fw-semibold">Saved Schemes</div>
+              <div class="fs-3 fw-bold text-danger" id="dash-saved-count">2</div>
+            </div>
+            <div class="rounded-circle bg-danger-subtle text-danger p-3">
+              <i class="fa-solid fa-bookmark fs-4"></i>
+            </div>
+          </div>
+          <a href="saved-schemes.html" class="small text-decoration-none mt-2 d-inline-block">View Bookmarks &rarr;</a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm p-3 h-100">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="text-muted small fw-semibold">Tracked Applications</div>
+              <div class="fs-3 fw-bold text-success" id="dash-apps-count">1</div>
+            </div>
+            <div class="rounded-circle bg-success-subtle text-success p-3">
+              <i class="fa-solid fa-file-signature fs-4"></i>
+            </div>
+          </div>
+          <a href="application-status.html" class="small text-decoration-none mt-2 d-inline-block">Track Progress &rarr;</a>
+        </div>
+      </div>
+
+      <div class="col-6 col-md-3">
+        <div class="card border-0 shadow-sm p-3 h-100">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <div class="text-muted small fw-semibold">Pending Actions</div>
+              <div class="fs-3 fw-bold text-warning" id="dash-pending-count">2</div>
+            </div>
+            <div class="rounded-circle bg-warning-subtle text-warning p-3">
+              <i class="fa-solid fa-bell fs-4"></i>
+            </div>
+          </div>
+          <a href="notifications.html" class="small text-decoration-none mt-2 d-inline-block">View Alerts &rarr;</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Action Bar -->
+    <div class="card border-0 shadow-sm p-3 mb-4 bg-white">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <span class="fw-bold text-dark"><i class="fa-solid fa-bolt text-warning me-2"></i> Quick Actions:</span>
+        <div class="d-flex flex-wrap gap-2">
+          <a href="scheme-finder.html" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-magnifying-glass me-1"></i> Find Schemes</a>
+          <a href="eligibility.html" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-clipboard-check me-1"></i> Check Eligibility</a>
+          <a href="profile.html" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-user-pen me-1"></i> Update Profile</a>
+          <a href="documents.html" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-file-arrow-up me-1"></i> Upload Documents</a>
+          <a href="family.html" class="btn btn-sm btn-outline-secondary"><i class="fa-solid fa-people-roof me-1"></i> Family Welfare</a>
+          <a href="ai-assistant.html" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-robot me-1"></i> Ask AI Assistant</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- Left Column: Recommended for You -->
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm p-4 mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-wand-magic-sparkles text-primary me-2"></i> Recommended Schemes for You</h5>
+            <a href="recommendations.html" class="small text-decoration-none">View All Recommendations &rarr;</a>
+          </div>
+
+          <div id="dash-recs-container" class="d-flex flex-column gap-3">
+            <div class="text-center py-4 text-muted"><div class="spinner-border spinner-border-sm me-2"></div> Loading recommendations...</div>
+          </div>
+        </div>
+
+        <!-- Tracked Applications Preview -->
+        <div class="card border-0 shadow-sm p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-clock-rotate-left text-success me-2"></i> Application Status Tracking</h5>
+            <a href="application-status.html" class="small text-decoration-none">Open Application Tracker &rarr;</a>
+          </div>
+          <div id="dash-apps-container">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Document Checklist & Notifications -->
+      <div class="col-lg-4">
+        <!-- Document Checklist Card -->
+        <div class="card border-0 shadow-sm p-4 mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold text-dark mb-0"><i class="fa-solid fa-folder-open text-info me-2"></i> Document Readiness</h6>
+            <a href="documents.html" class="small text-decoration-none">Manage Vault</a>
+          </div>
+          <div id="dash-docs-checklist" class="small">
+            <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
+              <span><i class="fa-solid fa-circle-check text-success me-2"></i> Aadhaar Card</span>
+              <span class="badge bg-success-subtle text-success">Verified</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
+              <span><i class="fa-solid fa-circle-check text-success me-2"></i> Bank Passbook</span>
+              <span class="badge bg-success-subtle text-success">Verified</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
+              <span><i class="fa-solid fa-circle-notch text-warning me-2"></i> Income Certificate</span>
+              <span class="badge bg-warning-subtle text-warning">Pending</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between py-2">
+              <span><i class="fa-solid fa-circle-notch text-warning me-2"></i> Land / Caste Record</span>
+              <span class="badge bg-warning-subtle text-warning">Optional</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Alerts & Notifications -->
+        <div class="card border-0 shadow-sm p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="fw-bold text-dark mb-0"><i class="fa-solid fa-bell text-warning me-2"></i> Notifications</h6>
+            <a href="notifications.html" class="small text-decoration-none">View All</a>
+          </div>
+          <div id="dash-notif-list" class="small d-flex flex-column gap-2">
+            <div class="p-2 bg-light rounded-2">
+              <div class="fw-semibold text-dark">Application Milestone</div>
+              <div class="text-muted small">Your PM-KISAN application is currently under verification.</div>
+            </div>
+            <div class="p-2 bg-light rounded-2">
+              <div class="fw-semibold text-dark">Document Reminder</div>
+              <div class="text-muted small">Update your income certificate before the academic term deadline.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const user = API.getCurrentUser();
+      if (user) {
+        document.getElementById('dash-welcome').innerText = `Welcome back, ${user.fullName}`;
+      }
+
+      // Load Profile completion %
+      const profRes = await API.get('/profile');
+      if (profRes && profRes.data) {
+        const pct = profRes.data.completionPercentage || 85;
+        document.getElementById('dash-profile-pct').innerText = `${pct}%`;
+        document.getElementById('dash-profile-bar').style.width = `${pct}%`;
+      }
+
+      // Load recommendations preview
+      const recRes = await API.get('/recommendations');
+      const recs = recRes && recRes.data ? recRes.data.slice(0, 3) : [];
+      const recContainer = document.getElementById('dash-recs-container');
+      if (recs.length > 0) {
+        recContainer.innerHTML = recs.map(r => `
+          <div class="p-3 border rounded-3 bg-white d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <div>
+              <div class="d-flex align-items-center gap-2 mb-1">
+                <span class="badge bg-light text-primary border">${r.categoryName || 'Welfare'}</span>
+                <span class="fw-bold text-success small">${r.score}% Match</span>
+              </div>
+              <h6 class="fw-bold text-dark mb-1">${r.schemeName}</h6>
+              <div class="small text-muted">${r.matchExplanation}</div>
+            </div>
+            <div class="d-flex gap-2">
+              <a href="scheme-details.html?id=${r.schemeId}" class="btn btn-sm btn-outline-primary">Details</a>
+              <a href="eligibility.html?schemeId=${r.schemeId}" class="btn btn-sm btn-gov-primary py-1 px-3">Check</a>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        recContainer.innerHTML = '<div class="text-muted small">No personalized recommendations yet. Update your profile!</div>';
+      }
+
+      // Load Applications preview
+      const appRes = await API.get('/applications');
+      const apps = appRes && appRes.data ? appRes.data : [];
+      document.getElementById('dash-apps-count').innerText = apps.length;
+      const appContainer = document.getElementById('dash-apps-container');
+      if (apps.length > 0) {
+        const firstApp = apps[0];
+        appContainer.innerHTML = `
+          <div class="p-3 bg-light rounded-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <span class="fw-bold text-dark">${firstApp.scheme ? firstApp.scheme.name : 'Government Scheme'}</span>
+              <span class="badge bg-warning text-dark">${firstApp.status}</span>
+            </div>
+            <div class="small text-muted">Application No: <code>${firstApp.applicationNumber}</code></div>
+          </div>
+        `;
+      } else {
+        appContainer.innerHTML = '<div class="text-muted small">No applications currently tracked. <a href="application-status.html">Add one now</a>.</div>';
+      }
+    });
+  </script>
+</body>
+</html>

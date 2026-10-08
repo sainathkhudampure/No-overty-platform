@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Search — NO POVERTY Welfare Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div id="app-navbar"></div>
+
+  <div class="container my-5 flex-grow-1" style="max-width: 860px;">
+    <div class="text-center mb-4">
+      <span class="badge bg-danger mb-2 px-3 py-1">ACCESSIBLE VOICE INTERFACE</span>
+      <h2 class="fw-bold text-dark">Voice-Based Scheme Discovery</h2>
+      <p class="text-muted small max-w-600 mx-auto">Speak naturally in your preferred language to search schemes without manual typing.</p>
+    </div>
+
+    <!-- Voice Recording Interaction Card -->
+    <div class="card border-0 shadow-sm p-4 p-md-5 text-center bg-white mb-4">
+      <div id="browser-support-alert" class="alert alert-warning d-none small mb-4">
+        <i class="fa-solid fa-triangle-exclamation me-1"></i>
+        Voice search is not supported in this browser. Please use keyboard text search in the <a href="scheme-finder.html">Scheme Finder</a>.
+      </div>
+
+      <!-- Microphone Button -->
+      <div class="mb-4">
+        <button id="voice-record-btn" class="btn btn-danger rounded-circle p-4 shadow" style="width: 100px; height: 100px; font-size: 2.2rem;" onclick="toggleVoiceRecording()">
+          <i id="mic-icon" class="fa-solid fa-microphone"></i>
+        </button>
+      </div>
+
+      <h5 id="voice-status-title" class="fw-bold text-dark mb-1">Click the microphone and speak your requirement</h5>
+      <p id="voice-status-sub" class="text-muted small">Example: "I am a student looking for scholarships" or "Farmer income support schemes"</p>
+
+      <!-- Recognized Transcript Box -->
+      <div class="p-3 bg-light rounded-3 my-3 text-start">
+        <div class="small fw-bold text-muted mb-1"><i class="fa-solid fa-comment-dots me-1"></i> Recognized Speech Transcript:</div>
+        <div id="speech-transcript-text" class="fs-6 fst-italic text-dark">Your spoken words will appear here...</div>
+      </div>
+
+      <!-- Quick Voice Search Prompts -->
+      <div class="mt-3">
+        <div class="small text-muted mb-2">Or try one of these common citizen requests:</div>
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+          <button class="btn btn-sm btn-outline-secondary" onclick="simulateVoice('I am a college student looking for higher education scholarships')">
+            "I am a college student looking for scholarships"
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="simulateVoice('I am a farmer with 2 acres land. What support can I get?')">
+            "I am a farmer with 2 acres land"
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="simulateVoice('Senior citizen pension schemes for elderly')">
+            "Senior citizen pension schemes"
+          </button>
+          <button class="btn btn-sm btn-outline-secondary" onclick="simulateVoice('Ayushman Bharat free hospital treatment')">
+            "Ayushman Bharat health insurance"
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voice Results Container -->
+    <div class="card border-0 shadow-sm p-4 bg-white d-none" id="voice-results-card">
+      <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-wand-magic-sparkles text-primary me-2"></i> Matching Schemes for Your Request</h5>
+      <div class="row g-3" id="voice-schemes-grid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/speech.js"></script>
+  <script src="assets/js/scheme.js"></script>
+  <script>
+    let voiceHandler = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      voiceHandler = SpeechManager.initVoiceRecognition(
+        (transcript) => {
+          document.getElementById('speech-transcript-text').innerText = `"${transcript}"`;
+          handleVoiceSearch(transcript);
+        },
+        (state, err) => {
+          const btn = document.getElementById('voice-record-btn');
+          const title = document.getElementById('voice-status-title');
+          if (state === 'listening') {
+            btn.classList.add('mic-recording-pulse');
+            title.innerText = 'Listening... Speak now';
+          } else {
+            btn.classList.remove('mic-recording-pulse');
+            title.innerText = 'Click the microphone to speak again';
+          }
+        }
+      );
+
+      if (!voiceHandler.supported) {
+        document.getElementById('browser-support-alert').classList.remove('d-none');
+      }
+    });
+
+    function toggleVoiceRecording() {
+      if (!voiceHandler || !voiceHandler.supported) {
+        App.showToast('Voice search not supported in this browser.', 'error');
+        return;
+      }
+
+      if (SpeechManager.isRecognizing) {
+        voiceHandler.stop();
+      } else {
+        voiceHandler.start();
+      }
+    }
+
+    function simulateVoice(text) {
+      document.getElementById('speech-transcript-text').innerText = `"${text}"`;
+      handleVoiceSearch(text);
+    }
+
+    async function handleVoiceSearch(text) {
+      let keyword = '';
+      if (text.toLowerCase().includes('student') || text.toLowerCase().includes('scholarship')) keyword = 'scholarship';
+      else if (text.toLowerCase().includes('farmer') || text.toLowerCase().includes('kisan')) keyword = 'kisan';
+      else if (text.toLowerCase().includes('senior') || text.toLowerCase().includes('pension')) keyword = 'pension';
+      else if (text.toLowerCase().includes('ayushman') || text.toLowerCase().includes('health')) keyword = 'ayushman';
+      else keyword = text.split(' ')[0];
+
+      const schemes = await SchemeManager.loadSchemes(keyword);
+      const resultsCard = document.getElementById('voice-results-card');
+      const resultsGrid = document.getElementById('voice-schemes-grid');
+      resultsCard.classList.remove('d-none');
+
+      SchemeManager.renderSchemeCards(schemes, 'voice-schemes-grid');
+      resultsCard.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
+

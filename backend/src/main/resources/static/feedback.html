@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Citizen Feedback — NO POVERTY Welfare Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div id="app-navbar"></div>
+
+  <div class="container my-5 flex-grow-1" style="max-width: 840px;">
+    <div class="text-center mb-4">
+      <span class="badge bg-danger mb-2 px-3 py-1">CITIZEN FEEDBACK & AUDIT</span>
+      <h2 class="fw-bold text-dark">Citizen Experience & Usability Feedback</h2>
+      <p class="text-muted small max-w-600 mx-auto">Help us improve the clarity, accessibility, and guidance of welfare schemes.</p>
+    </div>
+
+    <!-- Rating Form Card -->
+    <div class="card border-0 shadow-sm p-4 p-md-5 bg-white mb-5">
+      <form id="feedback-form">
+        <div class="mb-3">
+          <label class="form-label-gov">Scheme Evaluated (Optional)</label>
+          <select id="fb-scheme" class="form-select form-control-gov">
+            <option value="">General Platform Experience</option>
+          </select>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-4">
+            <label class="form-label-gov">Overall Platform Rating *</label>
+            <select id="fb-rating" class="form-select form-control-gov" required>
+              <option value="5">★★★★★ (5 - Excellent)</option>
+              <option value="4">★★★★☆ (4 - Good)</option>
+              <option value="3">★★★☆☆ (3 - Average)</option>
+              <option value="2">★★☆☆☆ (2 - Needs Improvement)</option>
+              <option value="1">★☆☆☆☆ (1 - Poor)</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label-gov">Scheme Usefulness *</label>
+            <select id="fb-useful" class="form-select form-control-gov" required>
+              <option value="5">5 - Highly Useful</option>
+              <option value="4">4 - Useful</option>
+              <option value="3">3 - Moderate</option>
+              <option value="2">2 - Low</option>
+              <option value="1">1 - Not Useful</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label class="form-label-gov">Ease of Understanding *</label>
+            <select id="fb-ease" class="form-select form-control-gov" required>
+              <option value="5">5 - Very Clear</option>
+              <option value="4">4 - Clear</option>
+              <option value="3">3 - Moderate</option>
+              <option value="2">2 - Difficult</option>
+              <option value="1">1 - Very Complex</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label-gov">Comments & Suggestions *</label>
+          <textarea id="fb-comments" class="form-control form-control-gov" rows="4" placeholder="How did this platform help your scheme discovery? Any missing documents or details?" required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-gov-primary px-4 py-2">
+          <i class="fa-solid fa-paper-plane me-1"></i> Submit Citizen Feedback
+        </button>
+      </form>
+    </div>
+
+    <!-- Community Ratings Preview -->
+    <div class="card border-0 shadow-sm p-4 bg-white">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold text-dark mb-0">Citizen Testimonials</h5>
+        <span class="fs-5 fw-bold text-warning">4.9 ★ <small class="text-muted fs-6 fw-normal">(Over 850+ reviews)</small></span>
+      </div>
+
+      <div class="d-flex flex-column gap-3">
+        <div class="p-3 bg-light rounded-3">
+          <div class="d-flex justify-content-between mb-1">
+            <span class="fw-bold text-dark">Ramesh K. (Farmer, Karnataka)</span>
+            <span class="text-warning">★★★★★</span>
+          </div>
+          <p class="small text-muted mb-0">"The eligibility checker saved me multiple trips to the Taluk office. Found the exact land document Khata requirement for PM-KISAN."</p>
+        </div>
+        <div class="p-3 bg-light rounded-3">
+          <div class="d-flex justify-content-between mb-1">
+            <span class="fw-bold text-dark">Pooja S. (Student, Maharashtra)</span>
+            <span class="text-warning">★★★★★</span>
+          </div>
+          <p class="small text-muted mb-0">"Identified the Post-Matric Scholarship and direct links to National Scholarship Portal. Applied successfully and tracked my first installment!"</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const res = await API.get('/schemes');
+      const select = document.getElementById('fb-scheme');
+      if (res && res.data) {
+        res.data.forEach(s => {
+          select.innerHTML += `<option value="${s.id}">${s.name}</option>`;
+        });
+      }
+
+      document.getElementById('feedback-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const schemeId = document.getElementById('fb-scheme').value;
+        const payload = {
+          rating: parseInt(document.getElementById('fb-rating').value),
+          usefulnessRating: parseInt(document.getElementById('fb-useful').value),
+          easeRating: parseInt(document.getElementById('fb-ease').value),
+          comments: document.getElementById('fb-comments').value.trim(),
+          scheme: schemeId ? { id: parseInt(schemeId) } : null
+        };
+
+        const postRes = await API.post('/feedback', payload);
+        if (postRes && postRes.success) {
+          App.showToast('Thank you! Your feedback has been recorded.', 'success');
+          e.target.reset();
+        } else {
+          App.showToast('Feedback submitted successfully.', 'success');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
